@@ -40,7 +40,6 @@ use Elixant\Components\Utility\Arr;
 use Elixant\Components\Utility\Stringable;
 use Elixant\Components\Utility\Interfaces\Enumerable;
 use Elixant\Components\Utility\Collections\Traits\EnumeratesValues;
-use Elixant\Components\Utility\Collections\LazyCollection;
 
 /**
  * ${CARET}
@@ -1232,8 +1231,6 @@ class Collection implements ArrayAccess, Enumerable
 				
 				$ascending = Arr::get($comparison, 1, true) === true ||
 				             Arr::get($comparison, 1, true) === 'asc';
-				
-				$result = 0;
 				
 				if (is_callable($prop)) {
 					$result = $prop($a, $b);

@@ -22,6 +22,14 @@ namespace Elixant\Components\Utility;
  */
 use Doctrine\Common\Inflector\Inflector;
 
+/**
+ * Class: Pluralizer
+ *
+ * @package     elixant-platform/utility
+ * @copyright   2021 (c) Elixant Technology Ltd.
+ * @author      Alexander M. Schmautz <president@elixant-technology.com>
+ * @license     http://www.opensource.org/licenses/mit-license.html  MIT License
+ */
 class Pluralizer
 {
 	/**

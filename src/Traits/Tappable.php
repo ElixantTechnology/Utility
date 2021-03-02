@@ -32,12 +32,12 @@ namespace Elixant\Components\Utility\Traits;
  */
 
 /**
- * ${CARET}
+ * Class: Tappable
  *
- * @author      Alexander M. Schmautz <corporate@elixant-technology.com>\
- * @copyright   2021 (c) Elixant Technology Ltd. All Rights Reserved.
- * @since       1.0.0-dev
- * @package     elixant/framework
+ * @package     elixant-platform/utility
+ * @copyright   2021 (c) Elixant Technology Ltd.
+ * @author      Alexander M. Schmautz <president@elixant-technology.com>
+ * @license     http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 trait Tappable
 {

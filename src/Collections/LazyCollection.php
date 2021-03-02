@@ -269,10 +269,6 @@ class LazyCollection implements Enumerable
 	 */
 	public function countBy($callback = null)
 	{
-		$countBy = is_null($callback)
-			? $this->identity()
-			: $this->valueRetriever($callback);
-		
 		return new static(function () use ($callback) {
 			$counts = [];
 			
@@ -409,7 +405,7 @@ class LazyCollection implements Enumerable
 		
 		return new static(function () use ($callback) {
 			foreach ($this as $key => $value) {
-				if ($callback($value, $key)) {
+				if ($callback($value)) {
 					yield $key => $value;
 				}
 			}
