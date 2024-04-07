@@ -1,0 +1,40 @@
+{
+  "name":          "elixant/utility",
+  "description":   "Utility Package containing commonly used Libraries, Traits and Helpers.",
+  "type":          "library",
+  "authors":       [
+    {
+      "name":  "Alexander Schmautz",
+      "email": "a.schmautz91@gmail.com"
+    }
+  ],
+  "prefer-stable": true,
+  "require":       {
+    "php":                    "^8.2",
+    "ext-mbstring":           "*",
+    "ext-ctype":              "*",
+    "ext-json": "*",
+    "illuminate/collections": "^11.0",
+    "darsyn/ip":              "^4.1",
+    "league/commonmark":      "^2.4",
+    "ramsey/uuid":            "^4.7",
+    "symfony/uid":            "^7.0",
+    "symfony/finder":         "^7.0",
+    "symfony/var-dumper":     "^7.0",
+    "nesbot/carbon": "^3.2",
+    "laravel/serializable-closure": "^1.0",
+    "doctrine/inflector": "^2.0",
+    "voku/portable-ascii": "^1.5"
+  },
+  "autoload":      {
+    "psr-4": {
+      "Elixant\\Utility\\": "src/"
+    },
+    "files": [
+      "helpers.php"
+    ]
+  },
+  "config":        {
+    "optimize-autoloader": true
+  }
+}
