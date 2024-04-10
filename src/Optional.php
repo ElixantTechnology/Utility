@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Elixant Platform Framework Component
  *
@@ -60,8 +61,7 @@ class Optional implements ArrayAccess
     /**
      * Create a new optional instance.
      *
-     * @param mixed $value
-     *
+     * @param  mixed  $value
      * @return void
      */
     public function __construct(mixed $value)
@@ -88,8 +88,7 @@ class Optional implements ArrayAccess
     /**
      * Dynamically check a property exists on the underlying object.
      *
-     * @param mixed $name
-     *
+     * @param  mixed  $name
      * @return bool
      */
     public function __isset(mixed $name)
@@ -97,6 +96,7 @@ class Optional implements ArrayAccess
         if (is_object($this->value)) {
             return isset($this->value->{$name});
         }
+        
         if (is_array($this->value) || $this->value instanceof ArrayObject) {
             return isset($this->value[$name]);
         }
@@ -113,17 +113,13 @@ class Optional implements ArrayAccess
      */
     public function offsetExists($offset): bool
     {
-        return Arr::accessible($this->value)
-            && Arr::exists(
-                $this->value, $offset
-            );
+        return Arr::accessible($this->value) && Arr::exists($this->value, $offset);
     }
     
     /**
      * Get an item at a given offset.
      *
-     * @param mixed $offset
-     *
+     * @param  mixed  $offset
      * @return mixed
      */
     public function offsetGet(mixed $offset): mixed
@@ -164,7 +160,7 @@ class Optional implements ArrayAccess
      * Dynamically pass a method to the underlying object.
      *
      * @param string $method
-     * @param array  $parameters
+     * @param  array $parameters
      *
      * @return mixed
      */

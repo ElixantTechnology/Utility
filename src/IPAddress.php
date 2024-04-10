@@ -69,8 +69,7 @@ final class IPAddress extends IPv4
         ];
     
     /**
-     * Detect the Client's IP Address and create an instance of the IPAddress
-     * class.
+     * Detect the Client's IP Address and create an instance of the IPAddress class.
      *
      * @return \Elixant\Utility\IPAddress|\Darsyn\IP\Version\IPv4
      *
@@ -94,9 +93,11 @@ final class IPAddress extends IPv4
         foreach (IPAddress::$ip_headers as $header) {
             if (isset($_SERVER[$header])) {
                 $ips = explode(',', $_SERVER[$header]);
-                $ip  = trim(end($ips));
-                $ip  = filter_var($ip, FILTER_VALIDATE_IP);
-                if (false !== $ip) {
+                $ip = trim(end($ips));
+                $ip = filter_var($ip, FILTER_VALIDATE_IP);
+                
+                if (false !== $ip)
+                {
                     return $ip;
                 }
             }

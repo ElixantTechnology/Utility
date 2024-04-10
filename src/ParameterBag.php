@@ -119,7 +119,8 @@ class ParameterBag implements ParameterBagInterface
         if (null === $key) {
             return $this->items;
         }
-        if ( ! is_array($value = Arr::get($this->items, $key) ?? [])) {
+        
+        if (! is_array($value = Arr::get($this->items, $key) ?? [])) {
             throw new Exception(
                 sprintf(
                     'Unexpected value for parameter "%s": expecting "array", got "%s".',
@@ -169,7 +170,7 @@ class ParameterBag implements ParameterBagInterface
      * does not exist.
      *
      * @param string $key
-     * @param mixed  $default
+     * @param mixed $default
      *
      * @return mixed
      */
@@ -182,7 +183,7 @@ class ParameterBag implements ParameterBagInterface
      * Sets the value of the specified key.
      *
      * @param string $key
-     * @param mixed  $value
+     * @param mixed $value
      */
     public function set(string $key, mixed $value): void
     {
@@ -234,49 +235,40 @@ class ParameterBag implements ParameterBagInterface
     /**
      * Returns the alphabetic characters of the parameter value.
      *
-     * @param string $key     The key to retrieve the value from.
-     * @param string $default The default value to return if the key does not
-     *                        exist.
+     * @param string $key The key to retrieve the value from.
+     * @param string $default The default value to return if the key does not exist.
      *
      * @return string
      */
     public function getAlpha(string $key, string $default = ''): string
     {
-        return preg_replace(
-            '/[^[:alpha:]]/', '', $this->getString($key, $default)
-        );
+        return preg_replace('/[^[:alpha:]]/', '', $this->getString($key, $default));
     }
     
     /**
      * Returns the alphabetic characters and digits of the parameter value.
      *
-     * @param string $key     The key to retrieve the value from.
-     * @param string $default The default value to return if the key does not
-     *                        exist.
+     * @param string $key The key to retrieve the value from.
+     * @param string $default The default value to return if the key does not exist.
      *
      * @return string
      */
     public function getAlnum(string $key, string $default = ''): string
     {
-        return preg_replace(
-            '/[^[:alnum:]]/', '', $this->getString($key, $default)
-        );
+        return preg_replace('/[^[:alnum:]]/', '', $this->getString($key, $default));
     }
     
     /**
      * Returns the digits of the parameter value.
      *
-     * @param string $key     The key to retrieve the value from.
-     * @param string $default The default value to return if the key does not
-     *                        exist.
+     * @param string $key The key to retrieve the value from.
+     * @param string $default The default value to return if the key does not exist.
      *
      * @return string
      */
     public function getDigits(string $key, string $default = ''): string
     {
-        return preg_replace(
-            '/[^[:digit:]]/', '', $this->getString($key, $default)
-        );
+        return preg_replace('/[^[:digit:]]/', '', $this->getString($key, $default));
     }
     
     /**
@@ -285,16 +277,11 @@ class ParameterBag implements ParameterBagInterface
     public function getString(string $key, string $default = ''): string
     {
         $value = $this->get($key, $default);
-        if ( ! is_scalar($value) && ! $value instanceof \Stringable) {
-            throw new UnexpectedValueException(
-                sprintf(
-                    'Parameter value "%s" cannot be converted to "string".',
-                    $key
-                )
-            );
+        if (! is_scalar($value) && !$value instanceof \Stringable) {
+            throw new UnexpectedValueException(sprintf('Parameter value "%s" cannot be converted to "string".', $key));
         }
         
-        return (string)$value;
+        return (string) $value;
     }
     
     /**
@@ -302,10 +289,7 @@ class ParameterBag implements ParameterBagInterface
      */
     public function getInt(string $key, int $default = 0): int
     {
-        return $this->filter(
-            $key, $default, FILTER_VALIDATE_INT,
-            ['flags' => FILTER_REQUIRE_SCALAR]
-        );
+        return $this->filter($key, $default, FILTER_VALIDATE_INT, ['flags' => FILTER_REQUIRE_SCALAR]);
     }
     
     /**
@@ -313,10 +297,7 @@ class ParameterBag implements ParameterBagInterface
      */
     public function getBoolean(string $key, bool $default = false): bool
     {
-        return $this->filter(
-            $key, $default, FILTER_VALIDATE_BOOL,
-            ['flags' => FILTER_REQUIRE_SCALAR]
-        );
+        return $this->filter($key, $default, FILTER_VALIDATE_BOOL, ['flags' => FILTER_REQUIRE_SCALAR]);
     }
     
     /**
@@ -330,75 +311,62 @@ class ParameterBag implements ParameterBagInterface
      *
      * @return \BackedEnum|null
      */
-    public function getEnum(string $key, string $class,
-        ?BackedEnum $default = null
-    ): ?BackedEnum {
+    public function getEnum(string $key, string $class, ?BackedEnum $default = null): ?BackedEnum
+    {
         $value = $this->get($key);
+        
         if (null === $value) {
             return $default;
         }
+        
         try {
             return $class::from($value);
         } catch (ValueError|TypeError $e) {
-            throw new UnexpectedValueException(
-                sprintf(
-                    'Parameter "%s" cannot be converted to enum: %s.', $key,
-                    $e->getMessage()
-                ), $e->getCode(), $e
-            );
+            throw new UnexpectedValueException(sprintf('Parameter "%s" cannot be converted to enum: %s.', $key, $e->getMessage()), $e->getCode(), $e);
         }
     }
     
     /**
      * Filter key.
      *
-     * @param int                                     $filter  FILTER_*
-     *                                                         constant
-     * @param int|array{flags?: int, options?: array} $options Flags from
-     *                               FILTER_* constants
+     * @param int                                     $filter  FILTER_* constant
+     * @param int|array{flags?: int, options?: array} $options Flags from FILTER_* constants
      *
      * @see https://php.net/filter-var
      */
-    public function filter(string $key, mixed $default = null,
-        int $filter = FILTER_DEFAULT, mixed $options = []
-    ): mixed {
+    public function filter(string $key, mixed $default = null, int $filter = FILTER_DEFAULT, mixed $options = []): mixed
+    {
         $value = $this->get($key, $default);
+        
         // Always turn $options into an array - this allows filter_var option shortcuts.
-        if ( ! is_array($options) && $options) {
+        if (! is_array($options) && $options) {
             $options = ['flags' => $options];
         }
+        
         // Add a convenience check for arrays.
-        if (is_array($value) && ! isset($options['flags'])) {
+        if (is_array($value) && !isset($options['flags'])) {
             $options['flags'] = FILTER_REQUIRE_ARRAY;
         }
-        if (is_object($value) && ! $value instanceof \Stringable) {
-            throw new UnexpectedValueException(
-                sprintf('Parameter value "%s" cannot be filtered.', $key)
-            );
+        
+        if (is_object($value) && !$value instanceof \Stringable) {
+            throw new UnexpectedValueException(sprintf('Parameter value "%s" cannot be filtered.', $key));
         }
-        if ((FILTER_CALLBACK & $filter)
-            && ! (($options['options'] ?? null) instanceof Closure)
-        ) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'A Closure must be passed to "%s()" when FILTER_CALLBACK is used, "%s" given.',
-                    __METHOD__, get_debug_type($options['options'] ?? null)
-                )
-            );
+        
+        if ((FILTER_CALLBACK & $filter) && !(($options['options'] ?? null) instanceof Closure)) {
+            throw new InvalidArgumentException(sprintf('A Closure must be passed to "%s()" when FILTER_CALLBACK is used, "%s" given.', __METHOD__, get_debug_type($options['options'] ?? null)));
         }
+        
         $options['flags'] ??= 0;
-        $nullOnFailure    = $options['flags'] & FILTER_NULL_ON_FAILURE;
+        $nullOnFailure = $options['flags'] & FILTER_NULL_ON_FAILURE;
         $options['flags'] |= FILTER_NULL_ON_FAILURE;
+        
         $value = filter_var($value, $filter, $options);
+        
         if (null !== $value || $nullOnFailure) {
             return $value;
         }
-        throw new UnexpectedValueException(
-            sprintf(
-                'Parameter value "%s" is invalid and flag "FILTER_NULL_ON_FAILURE" was not set.',
-                $key
-            )
-        );
+        
+        throw new UnexpectedValueException(sprintf('Parameter value "%s" is invalid and flag "FILTER_NULL_ON_FAILURE" was not set.', $key));
     }
     
     /**

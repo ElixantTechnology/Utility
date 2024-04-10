@@ -53,21 +53,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  * @see             https://carbon.nesbot.com/docs/
  * @see             https://github.com/briannesbitt/Carbon/blob/master/src/Carbon/Factory.php
  *
- * @method Carbon create($year = 0, $month = 1, $day = 1, $hour = 0, $minute =
- *         0, $second = 0, $tz = null)
- * @method Carbon createFromDate($year = null, $month = null, $day = null, $tz
- *         = null)
+ * @method Carbon create($year = 0, $month = 1, $day = 1, $hour = 0, $minute = 0, $second = 0, $tz = null)
+ * @method Carbon createFromDate($year = null, $month = null, $day = null, $tz = null)
  * @method Carbon|false createFromFormat($format, $time, $tz = null)
- * @method Carbon createFromTime($hour = 0, $minute = 0, $second = 0, $tz =
- *         null)
+ * @method Carbon createFromTime($hour = 0, $minute = 0, $second = 0, $tz = null)
  * @method Carbon createFromTimeString($time, $tz = null)
  * @method Carbon createFromTimestamp($timestamp, $tz = null)
  * @method Carbon createFromTimestampMs($timestamp, $tz = null)
  * @method Carbon createFromTimestampUTC($timestamp)
- * @method Carbon createMidnightDate($year = null, $month = null, $day = null,
- *         $tz = null)
- * @method Carbon|false createSafe($year = null, $month = null, $day = null,
- *         $hour = null, $minute = null, $second = null, $tz = null)
+ * @method Carbon createMidnightDate($year = null, $month = null, $day = null, $tz = null)
+ * @method Carbon|false createSafe($year = null, $month = null, $day = null, $hour = null, $minute = null, $second = null, $tz = null)
  * @method void disableHumanDiffOption($humanDiffOption)
  * @method void enableHumanDiffOption($humanDiffOption)
  * @method mixed executeWithLocale($locale, $func)
@@ -190,7 +185,7 @@ class DateFactory
      */
     public static function useCallable(callable $callable): void
     {
-        static::$callable  = $callable;
+        static::$callable = $callable;
         static::$dateClass = null;
         static::$factory   = null;
     }
@@ -205,8 +200,8 @@ class DateFactory
     public static function useClass(string $dateClass): void
     {
         static::$dateClass = $dateClass;
-        static::$factory   = null;
-        static::$callable  = null;
+        static::$factory = null;
+        static::$callable = null;
     }
     
     /**
@@ -218,7 +213,7 @@ class DateFactory
      */
     public static function useFactory(object $factory): void
     {
-        static::$factory   = $factory;
+        static::$factory = $factory;
         static::$dateClass = null;
         static::$callable  = null;
     }

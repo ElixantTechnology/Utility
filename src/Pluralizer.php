@@ -80,7 +80,7 @@ class Pluralizer
     /**
      * Get the plural form of an English word.
      *
-     * @param string               $value
+     * @param string $value
      * @param \Countable|array|int $count
      *
      * @return string
@@ -173,7 +173,7 @@ class Pluralizer
      */
     public static function useLanguage(string $language): void
     {
-        static::$language  = $language;
+        static::$language = $language;
         static::$inflector = null;
     }
 }

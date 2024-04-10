@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Elixant Platform Framework Component
  *
@@ -27,7 +28,7 @@
  * @license      MIT License
  * @author       Alexander Schmautz <a.schmautz@outlook.com>
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 namespace Elixant\Utility;
 
 use Stringable;

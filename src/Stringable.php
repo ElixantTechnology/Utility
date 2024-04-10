@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Elixant Platform Framework Component
  *
@@ -27,7 +28,7 @@
  * @license      MIT License
  * @author       Alexander Schmautz <a.schmautz@outlook.com>
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 namespace Elixant\Utility;
 
 use Closure;
@@ -82,8 +83,7 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
     }
     
     /**
-     * Return the remainder of a string after the first occurrence of a given
-     * value.
+     * Return the remainder of a string after the first occurrence of a given value.
      *
      * @param string $search
      *
@@ -95,8 +95,7 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
     }
     
     /**
-     * Return the remainder of a string after the last occurrence of a given
-     * value.
+     * Return the remainder of a string after the last occurrence of a given value.
      *
      * @param string $search
      *
@@ -110,13 +109,12 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
     /**
      * Append the given values to the string.
      *
-     * @param array|string ...$values
-     *
+     * @param  array|string  ...$values
      * @return static
      */
     public function append(...$values): static
     {
-        return new static($this->value . implode('', $values));
+        return new static($this->value.implode('', $values));
     }
     
     /**
@@ -246,8 +244,8 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      * @return bool
      */
     public function contains(
-        array|string $needles, bool $ignoreCase = false
-    ): bool {
+        array|string $needles, bool $ignoreCase = false): bool
+    {
         return Str::contains($this->value, $needles, $ignoreCase);
     }
     
@@ -267,14 +265,12 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
     /**
      * Convert the case of a string.
      *
-     * @param int         $mode
-     * @param string|null $encoding
-     *
+     * @param  int  $mode
+     * @param  string|null  $encoding
      * @return static
      */
-    public function convertCase(int $mode = MB_CASE_FOLD,
-        ?string $encoding = 'UTF-8'
-    ): static {
+    public function convertCase(int $mode = MB_CASE_FOLD, ?string $encoding = 'UTF-8'): static
+    {
         return new static(Str::convertCase($this->value, $mode, $encoding));
     }
     
@@ -305,8 +301,7 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
     /**
      * Determine if the string is an exact match with the given value.
      *
-     * @param \Elixant\Utility\Stringable|string $value
-     *
+     * @param  \Elixant\Utility\Stringable|string  $value
      * @return bool
      */
     public function exactly(Stringable|string $value): bool
@@ -319,8 +314,7 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
     }
     
     /**
-     * Extracts an excerpt from text that matches the first instance of a
-     * phrase.
+     * Extracts an excerpt from text that matches the first instance of a phrase.
      *
      * @param string $phrase
      * @param array  $options
@@ -340,8 +334,8 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return \Illuminate\Support\Collection<int, string>
      */
-    public function explode(string $delimiter, int $limit = PHP_INT_MAX
-    ): Collection {
+    public function explode(string $delimiter, int $limit = PHP_INT_MAX): Collection
+    {
         return collect(explode($delimiter, $this->value, $limit));
     }
     
@@ -354,11 +348,12 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return \Illuminate\Support\Collection<int, string>
      */
-    public function split(int|string $pattern, int $limit = -1, int $flags = 0
-    ): Collection {
+    public function split(int|string $pattern, int $limit = -1, int $flags = 0): Collection
+    {
         if (filter_var($pattern, FILTER_VALIDATE_INT) !== false) {
             return collect(mb_str_split($this->value, $pattern));
         }
+        
         $segments = preg_split($pattern, $this->value, $limit, $flags);
         
         return ! empty($segments) ? collect($segments) : collect();
@@ -539,12 +534,9 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return static
      */
-    public function mask(string $character, int $index, int $length = null,
-        string $encoding = 'UTF-8'
-    ): static {
-        return new static(
-            Str::mask($this->value, $character, $index, $length, $encoding)
-        );
+    public function mask(string $character, int $index, int $length = null, string $encoding = 'UTF-8'): static
+    {
+        return new static(Str::mask($this->value, $character, $index, $length, $encoding));
     }
     
     /**
@@ -659,8 +651,7 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
     /**
      * Call the given callback and return a new string.
      *
-     * @param callable $callback
-     *
+     * @param  callable  $callback
      * @return static
      */
     public function pipe(callable $callback): static
@@ -693,8 +684,7 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
     }
     
     /**
-     * Find the multibyte safe position of the first occurrence of the given
-     * substring.
+     * Find the multibyte safe position of the first occurrence of the given substring.
      *
      * @param string      $needle
      * @param int         $offset
@@ -702,22 +692,20 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return int|false
      */
-    public function position(string $needle, int $offset = 0,
-        string $encoding = null
-    ): false|int {
+    public function position(string $needle, int $offset = 0, string $encoding = null): false|int
+    {
         return Str::position($this->value, $needle, $offset, $encoding);
     }
     
     /**
      * Prepend the given values to the string.
      *
-     * @param string ...$values
-     *
+     * @param  string  ...$values
      * @return static
      */
     public function prepend(...$values): static
     {
-        return new static(implode('', $values) . $this->value);
+        return new static(implode('', $values).$this->value);
     }
     
     /**
@@ -728,8 +716,8 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return static
      */
-    public function remove(array|string $search, bool $caseSensitive = true
-    ): static {
+    public function remove(array|string $search, bool $caseSensitive = true): static
+    {
         return new static(Str::remove($search, $this->value, $caseSensitive));
     }
     
@@ -746,8 +734,7 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
     /**
      * Repeat the string.
      *
-     * @param int $times
-     *
+     * @param  int  $times
      * @return static
      */
     public function repeat(int $times): static
@@ -764,12 +751,9 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return static
      */
-    public function replace(array|string $search, array|string $replace,
-        bool $caseSensitive = true
-    ): static {
-        return new static(
-            Str::replace($search, $replace, $this->value, $caseSensitive)
-        );
+    public function replace(array|string $search, array|string $replace, bool $caseSensitive = true): static
+    {
+        return new static(Str::replace($search, $replace, $this->value, $caseSensitive));
     }
     
     /**
@@ -799,8 +783,7 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
     }
     
     /**
-     * Replace the first occurrence of the given value if it appears at the
-     * start of the string.
+     * Replace the first occurrence of the given value if it appears at the start of the string.
      *
      * @param string $search
      * @param string $replace
@@ -826,8 +809,7 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
     }
     
     /**
-     * Replace the last occurrence of a given value if it appears at the end of
-     * the string.
+     * Replace the last occurrence of a given value if it appears at the end of the string.
      *
      * @param string $search
      * @param string $replace
@@ -848,18 +830,13 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return static
      */
-    public function replaceMatches(array|string $pattern,
-        string|Closure $replace, int $limit = -1
-    ): static {
+    public function replaceMatches(array|string $pattern, string|Closure $replace, int $limit = -1): static
+    {
         if ($replace instanceof Closure) {
-            return new static(
-                preg_replace_callback($pattern, $replace, $this->value, $limit)
-            );
+            return new static(preg_replace_callback($pattern, $replace, $this->value, $limit));
         }
         
-        return new static(
-            preg_replace($pattern, $replace, $this->value, $limit)
-        );
+        return new static(preg_replace($pattern, $replace, $this->value, $limit));
     }
     
     /**
@@ -956,8 +933,8 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return static
      */
-    public function transliterate(?string $unknown = '?', ?bool $strict = false
-    ): static {
+    public function transliterate(?string $unknown = '?', ?bool $strict = false): static
+    {
         return new static(Str::transliterate($this->value, $unknown, $strict));
     }
     
@@ -980,12 +957,9 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return static
      */
-    public function slug(string $separator = '-', ?string $language = 'en',
-        array $dictionary = ['@' => 'at']
-    ): static {
-        return new static(
-            Str::slug($this->value, $separator, $language, $dictionary)
-        );
+    public function slug(string $separator = '-', ?string $language = 'en', array $dictionary = ['@' => 'at']): static
+    {
+        return new static(Str::slug($this->value, $separator, $language, $dictionary));
     }
     
     /**
@@ -1023,8 +997,7 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
     }
     
     /**
-     * Returns the portion of the string specified by the start and length
-     * parameters.
+     * Returns the portion of the string specified by the start and length parameters.
      *
      * @param int      $start
      * @param int|null $length
@@ -1032,12 +1005,9 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return static
      */
-    public function substr(int $start, int $length = null,
-        string $encoding = 'UTF-8'
-    ): static {
-        return new static(
-            Str::substr($this->value, $start, $length, $encoding)
-        );
+    public function substr(int $start, int $length = null, string $encoding = 'UTF-8'): static
+    {
+        return new static(Str::substr($this->value, $start, $length, $encoding));
     }
     
     /**
@@ -1049,9 +1019,8 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return int
      */
-    public function substrCount(string $needle, int $offset = 0,
-        int $length = null
-    ): int {
+    public function substrCount(string $needle, int $offset = 0, int $length = null): int
+    {
         return Str::substrCount($this->value, $needle, $offset, $length);
     }
     
@@ -1064,19 +1033,15 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return static
      */
-    public function substrReplace(array|string $replace, array|int $offset = 0,
-        array|int $length = null
-    ): static {
-        return new static(
-            Str::substrReplace($this->value, $replace, $offset, $length)
-        );
+    public function substrReplace(array|string $replace, array|int $offset = 0, array|int $length = null): static
+    {
+        return new static(Str::substrReplace($this->value, $replace, $offset, $length));
     }
     
     /**
      * Swap multiple keywords in a string with other keywords.
      *
-     * @param array $map
-     *
+     * @param  array  $map
      * @return static
      */
     public function swap(array $map): static
@@ -1087,8 +1052,7 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
     /**
      * Take the first or last {$limit} characters.
      *
-     * @param int $limit
-     *
+     * @param  int  $limit
      * @return static
      */
     public function take(int $limit): static
@@ -1109,8 +1073,7 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      */
     public function trim(string $characters = null): static
     {
-        return new static(trim(...array_merge([$this->value], func_get_args()))
-        );
+        return new static(trim(...array_merge([$this->value], func_get_args())));
     }
     
     /**
@@ -1122,8 +1085,7 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      */
     public function ltrim(string $characters = null): static
     {
-        return new static(ltrim(...array_merge([$this->value], func_get_args()))
-        );
+        return new static(ltrim(...array_merge([$this->value], func_get_args())));
     }
     
     /**
@@ -1135,8 +1097,7 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      */
     public function rtrim(string $characters = null): static
     {
-        return new static(rtrim(...array_merge([$this->value], func_get_args()))
-        );
+        return new static(rtrim(...array_merge([$this->value], func_get_args())));
     }
     
     /**
@@ -1178,9 +1139,8 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return static
      */
-    public function whenContains(array|string $needles, callable $callback,
-        callable $default = null
-    ): static {
+    public function whenContains(array|string $needles, callable $callback, callable $default = null): static
+    {
         return $this->when($this->contains($needles), $callback, $default);
     }
     
@@ -1192,8 +1152,8 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return static
      */
-    public function whenEmpty(callable $callback, callable $default = null
-    ): static {
+    public function whenEmpty(callable $callback, callable $default = null): static
+    {
         return $this->when($this->isEmpty(), $callback, $default);
     }
     
@@ -1205,8 +1165,8 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return static
      */
-    public function whenNotEmpty(callable $callback, callable $default = null
-    ): static {
+    public function whenNotEmpty(callable $callback, callable $default = null): static
+    {
         return $this->when($this->isNotEmpty(), $callback, $default);
     }
     
@@ -1219,15 +1179,13 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return static
      */
-    public function whenEndsWith(array|string $needles, callable $callback,
-        callable $default = null
-    ): static {
+    public function whenEndsWith(array|string $needles, callable $callback, callable $default = null): static
+    {
         return $this->when($this->endsWith($needles), $callback, $default);
     }
     
     /**
-     * Execute the given callback if the string is an exact match with the
-     * given value.
+     * Execute the given callback if the string is an exact match with the given value.
      *
      * @param string        $value
      * @param callable      $callback
@@ -1235,15 +1193,13 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return static
      */
-    public function whenExactly(string $value, callable $callback,
-        callable $default = null
-    ): static {
+    public function whenExactly(string $value, callable $callback, callable $default = null): static
+    {
         return $this->when($this->exactly($value), $callback, $default);
     }
     
     /**
-     * Execute the given callback if the string is not an exact match with the
-     * given value.
+     * Execute the given callback if the string is not an exact match with the given value.
      *
      * @param string        $value
      * @param callable      $callback
@@ -1251,9 +1207,8 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return static
      */
-    public function whenNotExactly(string $value, callable $callback,
-        callable $default = null
-    ): static {
+    public function whenNotExactly(string $value, callable $callback, callable $default = null): static
+    {
         return $this->when(! $this->exactly($value), $callback, $default);
     }
     
@@ -1266,9 +1221,8 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return static
      */
-    public function whenIs(array|string $pattern, callable $callback,
-        callable $default = null
-    ): static {
+    public function whenIs(array|string $pattern, callable $callback, callable $default = null): static
+    {
         return $this->when($this->is($pattern), $callback, $default);
     }
     
@@ -1280,8 +1234,8 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return static
      */
-    public function whenIsAscii(callable $callback, callable $default = null
-    ): static {
+    public function whenIsAscii(callable $callback, callable $default = null): static
+    {
         return $this->when($this->isAscii(), $callback, $default);
     }
     
@@ -1293,8 +1247,8 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return static
      */
-    public function whenIsUuid(callable $callback, callable $default = null
-    ): static {
+    public function whenIsUuid(callable $callback, callable $default = null): static
+    {
         return $this->when($this->isUuid(), $callback, $default);
     }
     
@@ -1306,8 +1260,8 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return static
      */
-    public function whenIsUlid(callable $callback, callable $default = null
-    ): static {
+    public function whenIsUlid(callable $callback, callable $default = null): static
+    {
         return $this->when($this->isUlid(), $callback, $default);
     }
     
@@ -1320,9 +1274,8 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return static
      */
-    public function whenStartsWith(array|string $needles, callable $callback,
-        callable $default = null
-    ): static {
+    public function whenStartsWith(array|string $needles, callable $callback, callable $default = null): static
+    {
         return $this->when($this->startsWith($needles), $callback, $default);
     }
     
@@ -1335,9 +1288,8 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return static
      */
-    public function whenTest(string $pattern, callable $callback,
-        callable $default = null
-    ): static {
+    public function whenTest(string $pattern, callable $callback, callable $default = null): static
+    {
         return $this->when($this->test($pattern), $callback, $default);
     }
     
@@ -1375,12 +1327,10 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      *
      * @return static
      */
-    public function wordWrap(int $characters = 75,
-        string $break = "\n", bool $cutLongWords = false
-    ): static {
-        return new static(
-            Str::wordWrap($this->value, $characters, $break, $cutLongWords)
-        );
+    public function wordWrap(int    $characters = 75,
+                             string $break = "\n", bool $cutLongWords = false): static
+    {
+        return new static(Str::wordWrap($this->value, $characters, $break, $cutLongWords));
     }
     
     /**
@@ -1444,8 +1394,7 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
     /**
      * Dump the string.
      *
-     * @param mixed ...$args
-     *
+     * @param  mixed  ...$args
      * @return $this
      */
     public function dump(...$args): static
@@ -1500,8 +1449,7 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
     /**
      * Get the underlying string value as a boolean.
      *
-     * Returns true when value is "1", "true", "on", and "yes". Otherwise,
-     * returns false.
+     * Returns true when value is "1", "true", "on", and "yes". Otherwise, returns false.
      *
      * @return bool
      */
@@ -1519,8 +1467,8 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      * @return \Elixant\Utility\Carbon
      */
     public function toDate(string $format = null,
-        string $tz = null
-    ): Carbon {
+                           string $tz = null): Carbon
+    {
         if (is_null($format)) {
             return
                 (new DateFactory)->parse($this->value, $tz);
@@ -1542,8 +1490,7 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
     /**
      * Determine if the given offset exists.
      *
-     * @param mixed $offset
-     *
+     * @param  mixed  $offset
      * @return bool
      */
     public function offsetExists(mixed $offset): bool
@@ -1554,8 +1501,7 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
     /**
      * Get the value at the given offset.
      *
-     * @param mixed $offset
-     *
+     * @param  mixed  $offset
      * @return string
      */
     public function offsetGet(mixed $offset): string
@@ -1579,8 +1525,7 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
     /**
      * Unset the value at the given offset.
      *
-     * @param mixed $offset
-     *
+     * @param  mixed  $offset
      * @return void
      */
     public function offsetUnset(mixed $offset): void
@@ -1607,6 +1552,6 @@ class Stringable implements JsonSerializable, ArrayAccess, BaseStringable
      */
     public function __toString()
     {
-        return (string)$this->value;
+        return (string) $this->value;
     }
 }
