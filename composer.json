@@ -24,7 +24,7 @@
     "nesbot/carbon": "^3.2",
     "laravel/serializable-closure": "^1.0",
     "doctrine/inflector": "^2.0",
-    "voku/portable-ascii": "^1.5"
+    "voku/portable-ascii": "^2.0"
   },
   "autoload":      {
     "psr-4": {
